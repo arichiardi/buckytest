@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rm:rmap xmlns:bc="http://www.eclipse.org/buckminster/Common-1.0" xmlns:rm="http://www.eclipse.org/buckminster/RMap-1.0">
+  <rm:property key="use.build" value="RBUILD"/>
+  <rm:property key="p2.platform.dir" value="file:/p2_test/ext_platform/"/>
+ 
+  <rm:locator searchPathRef="com.test.git" pattern="^com\.test\..+" failOnError="false"/>
+  <rm:locator searchPathRef="server.local.platform" pattern="^com\.ext\..+" failOnError="false"/>
+  <rm:locator searchPathRef="server.local.platform" pattern="^org\.eclipse\..+" failOnError="false"/>
+  <rm:locator searchPathRef="server.local.platform" pattern="^..+" failOnError="false"/>
+  
+  <rm:searchPath name="com.test.git">
+	  <rm:provider
+		componentTypes="osgi.bundle,eclipse.feature"
+		readerType="git"
+		resolutionFilter=""
+		mutable="true"
+		source="true">
+		
+		<rm:uri format="{0}/egit,{1}">
+			<bc:propertyRef key="workspace.root"/>
+			<bc:propertyRef key="buckminster.component"/>
+		</rm:uri>
+		<rm:property
+			key="git.remote.uri"
+			value="git://github.com/buckytest.git"/>
+
+		<rm:property
+			key="git.remote.name"
+			value="buckytest"/>
+	  </rm:provider>
+  </rm:searchPath>
+  
+  <rm:searchPath name="server.local.platform">
+	<rm:provider readerType="p2" componentTypes="osgi.bundle,eclipse.feature" mutable="false" source="false">
+		<rm:uri format="{0}">
+			<bc:propertyRef key="p2.platform.dir"/>
+		</rm:uri>
+	</rm:provider>
+  </rm:searchPath>
+  
+</rm:rmap>
